@@ -1,4 +1,4 @@
-package com.portal.api.dto;
+package com.store.car.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
