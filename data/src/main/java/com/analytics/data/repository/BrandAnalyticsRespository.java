@@ -8,5 +8,12 @@ import java.util.Optional;
 
 @Repository
 public interface BrandAnalyticsRespository extends JpaRepository<BrandAnalyticsEntity, Long> {
+
+    /**
+     * Retrieves a {@link BrandAnalyticsEntity} by its brand name.
+     *
+     * @param brand the brand name to search for
+     * @return an {@link Optional} containing the matching entity, or empty if not found
+     */
     Optional<BrandAnalyticsEntity> findByBrand(String brand);
 }

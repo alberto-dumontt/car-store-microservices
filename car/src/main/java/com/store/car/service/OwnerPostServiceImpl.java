@@ -12,6 +12,13 @@ public class OwnerPostServiceImpl implements OwnerPostService {
     @Autowired
     private OwnerPostRepository ownerPostRepository;
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Maps the given {@link OwnerPostDTO} fields (name, type, and contact number)
+     * to a new {@link OwnerPostEntity} and persists it to the database.
+     * </p>
+     */
     @Override
     public void createOwnerPost(OwnerPostDTO ownerPostDTO) {
         OwnerPostEntity ownerPostEntity = new OwnerPostEntity();

@@ -21,12 +21,25 @@ public class CarPostServiceImpl implements CarPostService {
     @Autowired
     OwnerPostRepository ownerPostRepository;
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Maps the given {@link CarPostDTO} to a {@link CarPostEntity} and persists it.
+     * </p>
+     */
     @Override
     public void newPostDetails(CarPostDTO carPostDTO) {
         CarPostEntity carPostEntity = mapCarDTOtoEntity(carPostDTO);
         carPostRepository.save(carPostEntity);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Fetches all car post records from the database and maps each {@link CarPostEntity}
+     * to a {@link CarPostDTO} before returning the list.
+     * </p>
+     */
     @Override
     public List<CarPostDTO> getCarSales() {
         List<CarPostDTO> listCarsSales = new ArrayList<>();
@@ -38,6 +51,13 @@ public class CarPostServiceImpl implements CarPostService {
         return listCarsSales;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Looks up the post by {@code postId} and updates its fields with the values
+     * from {@code carPostDTO}. Throws {@link NoSuchElementException} if the post is not found.
+     * </p>
+     */
     @Override
     public void changeCarSale(
             CarPostDTO carPostDTO,
@@ -59,11 +79,23 @@ public class CarPostServiceImpl implements CarPostService {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Deletes the car post identified by {@code postId} from the database.
+     * </p>
+     */
     @Override
     public void removeCarSale(Long postId) {
         carPostRepository.deleteById(postId);
     }
 
+    /**
+     * Maps a {@link CarPostEntity} to a {@link CarPostDTO}.
+     *
+     * @param carPostEntity the entity to convert
+     * @return a {@link CarPostDTO} populated with the entity's data, including the owner's name
+     */
     private CarPostDTO mapCarEntityToDTO(CarPostEntity carPostEntity) {
 
         return CarPostDTO.builder()
@@ -78,6 +110,17 @@ public class CarPostServiceImpl implements CarPostService {
 
     }
 
+    /**
+     * Maps a {@link CarPostDTO} to a {@link CarPostEntity}.
+     * <p>
+     * Resolves the owner by {@code ownerId} from the repository and sets the contact number
+     * accordingly. Throws {@link RuntimeException} if the owner is not found.
+     * The creation date is set to the current date and time.
+     * </p>
+     *
+     * @param carPostDTO the DTO containing the car post data
+     * @return a fully populated {@link CarPostEntity} ready to be persisted
+     */
     private CarPostEntity mapCarDTOtoEntity(CarPostDTO carPostDTO) {
         CarPostEntity carPostEntity = new CarPostEntity();
 

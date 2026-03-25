@@ -22,6 +22,16 @@ public class KafkaConsumerConfigs {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServer;
 
+    /**
+     * Creates and configures the Kafka {@link ConsumerFactory} used to deserialize messages
+     * from the {@code car-post-topic} topic.
+     * <p>
+     * Configures the bootstrap server address, consumer group ID ({@code analytics-posts-group}),
+     * and JSON deserialization of {@link CarPostDTO} values via Jackson.
+     * </p>
+     *
+     * @return a {@link ConsumerFactory} with {@link String} keys and {@link CarPostDTO} values
+     */
     @Bean
     public ConsumerFactory<String, CarPostDTO> consumerFactory() {
 
@@ -37,6 +47,15 @@ public class KafkaConsumerConfigs {
                 new JacksonJsonDeserializer<>(CarPostDTO.class, false));
     }
 
+    /**
+     * Creates the {@link ConcurrentKafkaListenerContainerFactory} used by {@code @KafkaListener}
+     * annotated methods to receive messages concurrently.
+     * <p>
+     * Associates the factory with the {@link #consumerFactory()} configured for {@link CarPostDTO}.
+     * </p>
+     *
+     * @return a {@link ConcurrentKafkaListenerContainerFactory} with {@link String} keys and {@link CarPostDTO} values
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, CarPostDTO> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, CarPostDTO>

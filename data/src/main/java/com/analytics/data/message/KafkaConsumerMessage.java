@@ -16,6 +16,15 @@ public class KafkaConsumerMessage {
     @Autowired
     private PostAnalyticsService postAnalyticsService;
 
+    /**
+     * Kafka listener that consumes messages from the {@code car-post-topic} topic.
+     * <p>
+     * Logs the received payload and delegates persistence of analytics data
+     * to {@link PostAnalyticsService#saveDataAnalytics(CarPostDTO)}.
+     * </p>
+     *
+     * @param carPostDTO the car post data transferred from the producer via Kafka
+     */
     @KafkaListener(topics = "car-post-topic", groupId = "analytics-posts-group")
     public void listening(CarPostDTO carPostDTO) {
 
